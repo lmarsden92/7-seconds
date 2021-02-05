@@ -1,23 +1,34 @@
 let Start = 0
 let Elapsed = 0
-let score = 0
+let MUSIC = ""
 input.onButtonPressed(Button.A, function () {
     Start = input.runningTime()
     basic.showIcon(IconNames.Happy)
 })
 input.onButtonPressed(Button.B, function () {
     Elapsed = input.runningTime() - Start
-    score = Math.abs(7000 - Elapsed)
     for (let index = 0; index < 2; index++) {
-        basic.showNumber(score / 1000)
+        basic.showNumber(Elapsed / 1000)
     }
-    if (score < 6500) {
+    if (Elapsed < 6500 || Elapsed > 7500) {
+        MUSIC = "lose"
         basic.showString("BETTER LUCK NEXT TIME")
-    } else if (score > 7500) {
-        basic.showString("BETTER LUCK NEXT TIME")
-    } else if (score < 7500) {
-        basic.showString("WELL DONE!")
     } else {
+        MUSIC = "win"
         basic.showString("WELL DONE!")
+    }
+})
+control.inBackground(function () {
+    while (0 == 0) {
+        if (MUSIC == "win") {
+            music.playMelody("G B A G C5 B A B ", 120)
+            music.stopAllSounds()
+        } else if (MUSIC == "lose") {
+            music.playMelody("C5 A B G A F G E ", 120)
+            music.stopAllSounds()
+        } else {
+        	
+        }
+        basic.pause(100)
     }
 })
